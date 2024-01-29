@@ -4,7 +4,7 @@ services:
     # image project
     agencia_turismo:
         build:
-            args: 
+            args:
                 user: milena
                 uid: 1000
             context: .
