@@ -1,0 +1,5 @@
+INSERT INTO states (name, initials, created_at) VALUES ('Pará', 'PA', now());
+INSERT INTO states (name, initials, created_at) VALUES ('Maranão', 'MA', now());
+
+INSERT INTO cities (state_id, name, zip_code, created_at) VALUES ('1', 'Belém', '11111111', now());
+INSERT INTO cities (state_id, name, zip_code, created_at) VALUES ('2', 'São Luiz', '22222222', now());
