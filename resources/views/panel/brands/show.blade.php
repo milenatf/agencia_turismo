@@ -14,9 +14,7 @@
 
     <div class="content-din">
         <div class="message">
-            @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
+            @include('panel.includes.alerts')
         </div>
 
         <ul>
