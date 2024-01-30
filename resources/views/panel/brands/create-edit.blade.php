@@ -4,11 +4,11 @@
 <div class="bred">
     <a href="{{ route('panel') }}" class="bred">Home ></a>
     <a href="{{ route('brands.index') }}" class="bred">Marcas ></a>
-    <a class="bred">Gerenciar avião</a>
+    <a class="bred">Gerenciar Marcas</a>
 </div>
 
 <div class="title-pg">
-    <h1 class="title-pg">Gerenciar avião</h1>
+    <h1 class="title-pg">Gerenciar Marcas</h1>
 </div>
 
 <div class="content-din">

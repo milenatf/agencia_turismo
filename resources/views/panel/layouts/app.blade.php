@@ -21,7 +21,7 @@
 <section class="menu">
 
 	<div class="logo">
-		<img src="{{url('assets/panel/imgs/icone-especializati.png')}}" alt="EspecializaTi" class="logo-painel">
+		<img src="{{ url('assets/panel/imgs/icone-especializati.png') }}" alt="EspecializaTi" class="logo-painel">
 	</div>
 
 	<div class="list-menu">
@@ -34,16 +34,16 @@
 			</li>
 
 			<li>
-				<a href="{{route('brands.index')}}">
+				<a href="{{ route('brands.index') }}">
 					<i class="fa fa-university" aria-hidden="true"></i>
 					Marcas
 				</a>
 			</li>
 
 			<li>
-				<a href="?pag=forms">
-					<i class="fa fa-fort-awesome" aria-hidden="true"></i>
-					Forms
+				<a href="{{ route('planes.index') }}">
+					<i class="fa fa-plane" aria-hidden="true"></i>
+					Avioes
 				</a>
 			</li>
 		</ul>
