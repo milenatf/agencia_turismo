@@ -34,9 +34,9 @@
 			</li>
 
 			<li>
-				<a href="?pag=list">
-					<i class="fa fa-id-card" aria-hidden="true"></i>
-					Listagem
+				<a href="{{route('brands.index')}}">
+					<i class="fa fa-university" aria-hidden="true"></i>
+					Marcas
 				</a>
 			</li>
 
