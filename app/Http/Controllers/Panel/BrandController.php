@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Brand;
 use App\Http\Requests\BrandStoreUpdateFormRequest;
-
+use Illuminate\Routing\RedirectController;
 
 class BrandController extends Controller
 {
@@ -66,7 +66,15 @@ class BrandController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Recuperar o item pelo id
+        $brand = $this->brand->find($id);
+
+        if(!$brand)
+            return redirect()->back()->with('error', 'Registro não encontrado!');
+
+        $title = "Detalhes da marca {$brand->name}";
+
+        return view('panel.brands.show', compact('title', 'brand'));
     }
 
     /**
@@ -115,7 +123,19 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $brand = $this->brand->find($id);
+
+        if(!$this->brand->find($id))
+            return redirect()->back()->with('error', 'Registro não encontrado!');
+
+        if($brand->delete())
+            return redirect()
+                ->route('brands.index')
+                ->with('success', 'O registro foi excluído com sucesso!');
+        else
+            return redirect()
+                ->back()
+                ->with('error', 'Não foi possível excluir o registro!');
     }
 
     public function search(Request $request)
