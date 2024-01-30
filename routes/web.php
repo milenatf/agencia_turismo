@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 /** Rotas panel */
 Route::group(['prefix' => 'panel'], function() {
-    Route::get('/', [PanelController::class, 'index'])->name('panel');
+    Route::any('brands/search', [BrandController::class, 'search'])->name('brands.search');
     Route::resource('brands', BrandController::class);
+    Route::get('/', [PanelController::class, 'index'])->name('panel');
 });
 
 

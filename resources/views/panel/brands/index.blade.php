@@ -17,12 +17,13 @@
     <div class="content-din bg-white">
 
         <div class="form-search">
-            <form class="form form-inline">
-                <input type="text" name="nome" placeholder="Nome:" class="form-control">
-                <input type="text" name="email" placeholder="E-mail:" class="form-control">
+            {{-- <form class="form form-inline"> --}}
+            {!! Form::open(['route' => 'brands.search', 'class' => 'form form-inline']) !!}
+                {!! Form::text('key_search', null, ['class' => 'form-control', 'placeholder' => 'O que deseja encontrar?']) !!}
 
                 <button class="btn btn-search">Pesquisar</button>
-            </form>
+            {!! Form::close() !!}
+            {{-- </form> --}}
         </div>
 
         <div class="message">
@@ -63,25 +64,10 @@
             @endforelse
         </table>
 
-        <nav aria-label="Page navigation">
-          <ul class="pagination">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
+        @if(isset($dataForm)) <!-- Se existir a busca na página index -->
+            {{ $brands->appends($dataForm)->links() }}
+        @else
+            {{ $brands->links() }}
+        @endif
     </div><!--Content Dinâmico-->
 @endsection
