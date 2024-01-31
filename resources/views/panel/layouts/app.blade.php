@@ -46,6 +46,20 @@
 					Avioes
 				</a>
 			</li>
+
+			<li>
+				<a href="{{ route('states.index') }}">
+					<i class="fa fa-globe" aria-hidden="true"></i>
+					Estados
+				</a>
+			</li>
+
+			{{-- <li>
+				<a href="{{ route('cities.index') }}">
+					<i class="fa fa-plane" aria-hidden="true"></i>
+					Cidades
+				</a>
+			</li> --}}
 		</ul>
 	</div>
 

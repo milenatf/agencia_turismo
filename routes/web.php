@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Panel\BrandController;
+use App\Http\Controllers\Panel\CityController;
 use App\Http\Controllers\Panel\PanelController;
 use App\Http\Controllers\Panel\PlaneController;
+use App\Http\Controllers\Panel\StateController;
 use App\Http\Controllers\Site\SiteController;
 
 use Illuminate\Support\Facades\Route;
@@ -13,8 +15,16 @@ Route::group(['prefix' => 'panel'], function() {
     Route::any('brands/search', [BrandController::class, 'search'])->name('brands.search');
     Route::get('brands/{id}/planes', [BrandController::class, 'planes'])->name('brands.planes');
     Route::resource('brands', BrandController::class);
+
     Route::any('planes/search', [PlaneController::class, 'search'])->name('planes.search');
     Route::resource('planes', PlaneController::class);
+
+    Route::any('states/search', [StateController::class, 'search'])->name('states.search');
+    Route::get('states', [StateController::class, 'index'])->name('states.index');
+
+    route::any('state/{initials}/cities/search', [CityController::class, 'search'])->name('state.cities.search');
+    route::get('state/{initials}/cities', [CityController::class, 'index'])->name('state.cities');
+
     Route::get('/', [PanelController::class, 'index'])->name('panel');
 });
 
