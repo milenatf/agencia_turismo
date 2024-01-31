@@ -2,16 +2,12 @@
 
 @section('content')
     <div class="bred">
-        <a href="" class="bred">Home ></a>
+        <a href="{{route('panel')}}" class="bred">Home ></a>
         <a href="" class="bred">Marcas ></a>
     </div>
 
     <div class="title-pg">
         <h1 class="title-pg">Marcas de aviões</h1>
-    </div>
-
-    <div class="title-pg">
-        <h1 class="title-pg">Listagem dos Itens</h1>
     </div>
 
     <div class="content-din bg-white">
@@ -58,6 +54,9 @@
                     <td>
                         <a href="{{ route('brands.edit', $brand->id) }}" class="edit">Edit</a>
                         <a href="{{ route('brands.show', $brand->id) }}" class="delete">View</a>
+                        <a href="{{ route('brands.planes', $brand->id) }}" class="edit">
+                            <i class="fa fa-plane" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             @empty

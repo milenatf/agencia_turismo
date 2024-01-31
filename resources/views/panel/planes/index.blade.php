@@ -44,22 +44,24 @@
 
         <table class="table table-striped">
             <tr>
-                <th>Nome</th>
+                <th>#ID</th>
                 <th>Marca</th>
-                <th>Total de passageiros</th>
                 <th>classe</th>
+                <th>Total de passageiros</th>
                 <th width="150">Ações</th>
             </tr>
 
             @forelse($planes as $plane)
                 <tr>
-                    <td>{{ $plane->name }}</td>
-                    <td>...</td>
+                    <td>{{ $plane->id }}</td>
+                    {{-- <td>{{ $plane->brand()->get()->first()->name }}</td> --}} <!-- Aqui é feita a chamada no método -->
+                    {{-- ou --}}
+                    <td>{{ $plane->brand->name }}</td>
+                    <td>{{ $plane->classes($plane->class) }}</td>
                     <td>{{ $plane->qty_passengers }}</td>
-                    <td>{{ $plane->class }}</td>
                     <td>
-                        <a href="{{ route('brands.edit', $plane->id) }}" class="edit">Edit</a>
-                        <a href="{{ route('brands.show', $plane->id) }}" class="delete">View</a>
+                        <a href="{{ route('planes.edit', $plane->id) }}" class="edit">Edit</a>
+                        <a href="{{ route('planes.show', $plane->id) }}" class="delete">View</a>
                     </td>
                 </tr>
             @empty

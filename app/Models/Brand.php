@@ -15,4 +15,10 @@ class Brand extends Model
     {
         return $this->where('name', 'LIKE', "%{$keySearch}%")->paginate($totalPage);
     }
+
+    public function planes()
+    {
+        // hasMany(): Traz o relacionamento de um para muitos
+        return $this->hasMany(Plane::class);
+    }
 }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 /** Rotas panel */
 Route::group(['prefix' => 'panel'], function() {
     Route::any('brands/search', [BrandController::class, 'search'])->name('brands.search');
+    Route::get('brands/{id}/planes', [BrandController::class, 'planes'])->name('brands.planes');
     Route::resource('brands', BrandController::class);
     Route::any('planes/search', [PlaneController::class, 'search'])->name('planes.search');
     Route::resource('planes', PlaneController::class);

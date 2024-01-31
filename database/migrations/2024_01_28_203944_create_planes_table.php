@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->integer('qty_passengers');
-            $table->enum('class', ['economy', 'luxury']);
+            $table->enum('class', ['economic', 'luxury']);
             $table->timestamps();
         });
     }

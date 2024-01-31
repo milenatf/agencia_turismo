@@ -138,6 +138,20 @@ class BrandController extends Controller
                 ->with('error', 'Não foi possível excluir o registro!');
     }
 
+    public function planes(string $id)
+    {
+        $brand = $this->brand->find($id);
+
+        if(!$brand)
+            return redirect()->back()->with('error', 'Registro não encontrado!');
+
+        $planes = $brand->planes()->get();
+
+        $title = "Aviões da marca {$brand->name}";
+
+        return view('panel.brands.planes', compact('title', 'brand', 'planes'));
+    }
+
     public function search(Request $request)
     {
         $dataForm = $request->except('_token');
