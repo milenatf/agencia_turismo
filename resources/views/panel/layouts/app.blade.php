@@ -54,12 +54,12 @@
 				</a>
 			</li>
 
-			{{-- <li>
-				<a href="{{ route('cities.index') }}">
-					<i class="fa fa-plane" aria-hidden="true"></i>
-					Cidades
+			<li>
+				<a href="{{ route('flights.index') }}">
+					<i class="fa fa-fighter-jet" aria-hidden="true"></i>
+					Voos
 				</a>
-			</li> --}}
+			</li>
 		</ul>
 	</div>
 

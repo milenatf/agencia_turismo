@@ -125,7 +125,7 @@ class BrandController extends Controller
     {
         $brand = $this->brand->find($id);
 
-        if(!$this->brand->find($id))
+        if(!$brand)
             return redirect()->back()->with('error', 'Registro não encontrado!');
 
         if($brand->delete())
