@@ -31,38 +31,65 @@ class Flight extends Model
     /**
      * Método criado para pegar todos os registros de voos a fim de limpar o controller index
      * deixando-o apenas para enviar os dados entre a model e as views
-     *  */
+     *
+     */
     public function getItems($totalPage)
     {
         return $this->with(['origin', 'destination'])->paginate($totalPage);
     }
 
-    public function newFlight(Request $request)
+    public function newFlight(Request $request, $fileName = '')
     {
         $data = $request->all();
 
         $data['airport_origin_id'] = $request->origin;
         $data['airport_destination_id'] = $request->destination;
-
-        // dd($data);
+        $data['image'] = $fileName;
 
         return $this->create($data);
     }
 
-    public function updateFlight(Request $request)
+    public function updateFlight(Request $request, $fileName = '')
     {
         $data = $request->all();
         $data['airport_origin_id'] = $request->origin;
         $data['airport_destination_id'] = $request->destination;
+        $data['image'] = $fileName;
 
         return $this->update($data);
     }
 
-    // public function search($keySearch)
-    // {
-    //     return $this->where('airport_origin', 'LIKE', "%{$keySearch}%")
-    //                 ->get();
-    // }
+    public function search($request, $totalPage)
+    {
+        // dd($request->all());
+        $flights = $this->where(function($query) use($request) {
+            if($request->code)
+                $query->where('id', $request->code);
+
+            if($request->date)
+                $query->where('date', $request->date);
+
+            if($request->hour_output)
+                $query->where('hour_output', $request->hour_output);
+
+            if($request->qts_stops !== null) { // verifica se o valor de qts_stops na requisição ($request) não é nulo.
+                /**
+                 * Se não foi nulo, a condição deve tratar explicitamente, o caso quando qts_stops é zero.
+                 * Essa verificação explícita é necessária devido ao modo como o Laravel trata valores nulos ou vazios em consultas.
+                 */
+                if ($request->qts_stops == 0) { // S
+                    $query->where(function ($subquery) use($request) {
+                        $subquery->where('qts_stops', $request->qts_stops);
+                    });
+                } else {
+                    $query->where('qts_stops', $request->qts_stops);
+                }
+            }
+        })->paginate($totalPage);
+
+        return $flights;
+
+    }
 
     public function origin()
     {

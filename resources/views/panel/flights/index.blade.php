@@ -14,16 +14,34 @@
 
         <div class="form-search">
             {!! Form::open(['route' => 'flights.search', 'class' => 'form form-inline']) !!}
-                {!! Form::text('key_search', null, ['class' => 'form-control', 'placeholder' => 'O que deseja encontrar?']) !!}
+                {!! Form::number('code', null, ['class' => 'form-control', 'placeholder' => 'Código do voo']) !!}
+                {!! Form::date('date', null, ['class' => 'form-control']) !!}
+                {!! Form::time('hour_output', null, ['class' => 'form-control']) !!}
+                {!! Form::number('qts_stops', null, ['class' => 'form-control', 'placeholder' => 'Paradas']) !!}
 
                 <button class="btn btn-search">Pesquisar</button>
             {!! Form::close() !!}
 
-            @if (isset($dataForm['key_search']))
+            @if (isset($dataForm))
                 <div class="alert alert-info">
                     <p>
                         <a href="{{ route('flights.index') }}"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-                        Resultado para: <strong>{{ $dataForm['key_search'] }}</strong>
+                        <p>Resultado para:<p>
+                        @if($dataForm['code'])
+                            <p><strong>Codigo:</strong> {{$dataForm['code']}} </p>
+                        @endif
+
+                        @if($dataForm['date'])
+                            <p><strong>Codigo:</strong> {{$dataForm['date']}} </p>
+                        @endif
+
+                        @if($dataForm['hour_output'])
+                            <p><strong>Codigo:</strong> {{$dataForm['hour_output']}} </p>
+                        @endif
+
+                        @if($dataForm['qts_stops'])
+                            <p><strong>Codigo:</strong> {{$dataForm['qts_stops']}} </p>
+                        @endif
                     </p>
                 </div>
             @endif
@@ -42,6 +60,7 @@
 
         <table class="table table-striped">
             <tr>
+                <th>Imagem</th>
                 <th>Avião</th>
                 <th>Origem</th>
                 <th>Destino</th>
@@ -53,6 +72,13 @@
 
             @forelse($flights as $flight)
                 <tr>
+                    <td>
+                        @if($flight->image)
+                            <img src="{{ url("/storage/flights/{$flight->image}") }}" alt="{{$flight->id}}" style="max-width: 50px;">
+                        @else
+                            <img src="{{ url('assets/panel/imgs/no-image.png') }}" alt="{{$flight->id}}" style="max-width: 50px;">
+                        @endif
+                    </td>
                     <td>{{ $flight->plane_id }}</td>
                     <td><a href="">{{ $flight->origin->name }}</a></td>
                     <td><a href="">{{ $flight->destination->name }}</a></td>

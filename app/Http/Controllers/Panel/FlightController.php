@@ -48,7 +48,29 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        if($this->flight->newFlight($request))
+        $newNameFile = '';
+        // Verifica se existe arquivo para fazer upload
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            // Recupera a extensão do aquivo
+            $extension = $request->image->extension();
+
+            // Define o nome da imagem
+            $nameFile = uniqid(date('HisYmd'));
+
+            // Monta o nome do arquivo com a extensão
+            $newNameFile = "{$nameFile}.{$extension}";
+            /**
+             * As regras de upload de arquivos ficam dentro do arquivo config/filesystems.php
+             */
+            if(!$request->file('image')->storeAs('public/flights', $newNameFile))
+                return redirect()
+                    ->back()
+                    ->with('error', 'Falha ao fazer o upload do arquivo!')
+                    ->withInput();
+        }
+
+        if($this->flight->newFlight($request, $newNameFile))
             return redirect()
                     ->route('flights.index')
                     ->with('success', 'Cadastro realizado com sucesso!');
@@ -98,16 +120,32 @@ class FlightController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
-
         $flight = $this->flight->with(['origin', 'destination'])->find($id);
 
         if(!$flight)
             return redirect()->back()->with('error', 'Voo não encontrado!');
 
-        // $flight->update($request);
+        $nameFile = $flight->image;
 
-        if($flight->updateFlight($request))
+        // Verifica se existe arquivo para fazer upload
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            if($flight->image)
+                $nameFile = $flight->image;
+            else
+                $nameFile = uniqid(date('HisYmd')).'.'.$request->image->extension(); // Define o nome da imagem com a extensão
+
+            /**
+             * As regras de upload de arquivos ficam dentro do arquivo config/filesystems.php
+             */
+            if(!$request->file('image')->storeAs('public/flights', $nameFile))
+                return redirect()
+                    ->back()
+                    ->with('error', 'Falha ao fazer o upload do arquivo!')
+                    ->withInput();
+        }
+
+        if($flight->updateFlight($request, $nameFile))
             return redirect()
                 ->route('flights.index')
                 ->with('success', 'Voo alterado com sucesso!');
@@ -142,6 +180,15 @@ class FlightController extends Controller
 
     public function search(Request $request)
     {
-        dd('Médoto search');
+        // dd($request->all());
+        $title = 'Resultado da busca';
+
+        $dataForm = $request->except('_token');
+
+        $flights = $this->flight->search($request, $this->totalPage);
+
+        // dd($flights);
+
+        return view('panel.flights.index', compact('title', 'dataForm', 'flights'));
     }
 }
