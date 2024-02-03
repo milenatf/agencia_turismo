@@ -50,7 +50,7 @@
 
     <div class="form-group">
         <label for="is_promotion">É Promoção?</label>
-        {!! Form::checkbox('is_promotion', null, null, ['id' => 'is_promotion']) !!}
+        {!! Form::checkbox('is_promotion', (isset($flight->is_promotion) && $flight->is_promotion == 1) ? true : 0, ['id' => 'is_promotion']) !!}
     </div>
 
     <div class="form-group">

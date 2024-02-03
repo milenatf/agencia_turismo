@@ -18,6 +18,8 @@
                 {!! Form::date('date', null, ['class' => 'form-control']) !!}
                 {!! Form::time('hour_output', null, ['class' => 'form-control']) !!}
                 {!! Form::number('qts_stops', null, ['class' => 'form-control', 'placeholder' => 'Paradas']) !!}
+                {!! Form::select('airport_origin_id', $airports, ['class' => 'form-control']) !!}
+                {!! Form::select('airport_destination_id', $airports, ['class' => 'form-control']) !!}
 
                 <button class="btn btn-search">Pesquisar</button>
             {!! Form::close() !!}
@@ -32,15 +34,23 @@
                         @endif
 
                         @if($dataForm['date'])
-                            <p><strong>Codigo:</strong> {{$dataForm['date']}} </p>
+                            <p><strong>Data do voo:</strong> {{ formatDateAndtime($dataForm['date']) }} </p>
                         @endif
 
                         @if($dataForm['hour_output'])
-                            <p><strong>Codigo:</strong> {{$dataForm['hour_output']}} </p>
+                            <p><strong>Saída:</strong> {{ formatDateAndTime($dataForm['hour_output'], 'H:i')}} </p>
                         @endif
 
                         @if($dataForm['qts_stops'])
-                            <p><strong>Codigo:</strong> {{$dataForm['qts_stops']}} </p>
+                            <p><strong>Paradas:</strong> {{$dataForm['qts_stops']}} </p>
+                        @endif
+
+                        @if($dataForm['airport_origin_id'])
+                            <p><strong>Origem:</strong> {{$airports[$dataForm['airport_origin_id']]}} </p>
+                        @endif
+
+                        @if($dataForm['airport_destination_id'])
+                            <p><strong>Destino:</strong> {{$airports[$dataForm['airport_destination_id']]}} </p>
                         @endif
                     </p>
                 </div>

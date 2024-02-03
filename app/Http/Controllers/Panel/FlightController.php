@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateFlightFormRequest;
 use App\Models\Airport;
 use App\Models\Flight;
 use App\Models\Plane;
@@ -26,7 +27,10 @@ class FlightController extends Controller
 
         $flights = $this->flight->getItems($this->totalPage);
 
-        return view('panel.flights.index', compact('title', 'flights'));
+        $airports = Airport::pluck('name', 'id');
+        $airports->prepend('Escolha o aeroporto', ''); // Esse trecho foi adicionado para poder colocar um option no select na busca de voos por origem e destino
+
+        return view('panel.flights.index', compact('title', 'airports', 'flights'));
     }
 
     /**
@@ -46,7 +50,7 @@ class FlightController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUpdateFlightFormRequest $request)
     {
         $newNameFile = '';
         // Verifica se existe arquivo para fazer upload
@@ -106,6 +110,8 @@ class FlightController extends Controller
 
         $flight = $this->flight->with(['origin', 'destination'])->find($id);
 
+        // dd($flight);
+
         $title = "Alterar Voo {$flight->id}";
         // dd($flight);
 
@@ -118,7 +124,7 @@ class FlightController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateFlightFormRequest $request, string $id)
     {
         $flight = $this->flight->with(['origin', 'destination'])->find($id);
 
@@ -144,6 +150,8 @@ class FlightController extends Controller
                     ->with('error', 'Falha ao fazer o upload do arquivo!')
                     ->withInput();
         }
+
+        // dd($request->all());
 
         if($flight->updateFlight($request, $nameFile))
             return redirect()
@@ -178,17 +186,16 @@ class FlightController extends Controller
                     ->withInput();
     }
 
-    public function search(Request $request)
+    public function search(StoreUpdateFlightFormRequest $request)
     {
-        // dd($request->all());
         $title = 'Resultado da busca';
 
         $dataForm = $request->except('_token');
 
+        $airports = Airport::pluck('name', 'id');
+
         $flights = $this->flight->search($request, $this->totalPage);
 
-        // dd($flights);
-
-        return view('panel.flights.index', compact('title', 'dataForm', 'flights'));
+        return view('panel.flights.index', compact('title', 'airports', 'dataForm', 'flights'));
     }
 }

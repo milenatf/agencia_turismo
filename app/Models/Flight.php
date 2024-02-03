@@ -11,6 +11,11 @@ class Flight extends Model
 {
     use HasFactory;
 
+    // Cast que garante que os valores no campo is_promotion vai ser true ou false
+    protected $casts = [
+        'is_promotion' => 'boolean'
+    ];
+
     protected $fillable = [
         'plane_id',
         'airport_origin_id',
@@ -42,6 +47,8 @@ class Flight extends Model
     {
         $data = $request->all();
 
+        // dd($data);
+
         $data['airport_origin_id'] = $request->origin;
         $data['airport_destination_id'] = $request->destination;
         $data['image'] = $fileName;
@@ -55,6 +62,10 @@ class Flight extends Model
         $data['airport_origin_id'] = $request->origin;
         $data['airport_destination_id'] = $request->destination;
         $data['image'] = $fileName;
+
+        // dd($data);
+
+        // dd($this->update($data));
 
         return $this->update($data);
     }
@@ -72,6 +83,13 @@ class Flight extends Model
             if($request->hour_output)
                 $query->where('hour_output', $request->hour_output);
 
+            if($request->airport_origin_id)
+                $query->where('airport_origin_id', $request->airport_origin_id);
+
+
+            if($request->airport_destination_id)
+                $query->where('airport_destination_id', $request->airport_destination_id);
+
             if($request->qts_stops !== null) { // verifica se o valor de qts_stops na requisição ($request) não é nulo.
                 /**
                  * Se não foi nulo, a condição deve tratar explicitamente, o caso quando qts_stops é zero.
@@ -85,7 +103,9 @@ class Flight extends Model
                     $query->where('qts_stops', $request->qts_stops);
                 }
             }
-        })->paginate($totalPage);
+        })->with(['origin', 'destination'])->paginate($totalPage);
+
+        // dd($flights);
 
         return $flights;
 
