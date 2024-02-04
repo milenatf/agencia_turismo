@@ -7,6 +7,7 @@ use App\Http\Controllers\Panel\FlightController;
 use App\Http\Controllers\Panel\PanelController;
 use App\Http\Controllers\Panel\PlaneController;
 use App\Http\Controllers\Panel\StateController;
+use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\Site\SiteController;
 
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::group(['prefix' => 'panel'], function() {
 
     Route::any('city/{id}/airports/search', [AirportController::class, 'search'])->name('airports.search');
     Route::resource('city/{id}/airports', AirportController::class);
+
+    route::any('users/search', [UserController::class, 'search'])->name('users.search');
+    route::resource('users', UserController::class);
 
     Route::get('/', [PanelController::class, 'index'])->name('panel');
 });
