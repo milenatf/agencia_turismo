@@ -68,4 +68,11 @@ class User extends Authenticatable
 
         return $this->save();
     }
+
+    public function search($keySearch, $totalPage = 10)
+    {
+        return $this->where('name', 'LIKE', "%{$keySearch}%")
+                    ->orWhere('email', 'LIKE', "%{$keySearch}%")
+                    ->paginate($totalPage);
+    }
 }

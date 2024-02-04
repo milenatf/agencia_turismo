@@ -154,6 +154,10 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        dd($request->all());
+        $dataForm = $request->except('_token');
+        $users = $this->user->search($request->key_search, $this->totalPage);
+        $title = "Usuários filtrados por: {$request->key_search}";
+
+        return view('panel.users.index', compact('title', 'users', 'dataForm'));
     }
 }
