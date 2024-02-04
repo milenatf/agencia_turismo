@@ -78,12 +78,57 @@ class UserController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $title = 'Alterar usuário';
+
+        $user = $this->user->find($id);
+
+        $isAdmin = $user->is_admin == 1 ? 'true' : 'false';
+
+        if(!$user)
+            return redirect()
+                    ->back()
+                    ->with('error', 'Usuário não encontrado!')
+                    ->withInput();
+
+        return view('panel.users.edit', compact('title', 'user', 'isAdmin'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UserStoreUpdateFormRequest $request, string $id)
     {
-        //
+        $user = $this->user->find($id);
+
+        if(!$user)
+            return redirect()->back()->with('error', 'Usuário não encontrado!');
+
+        $fileName = $user->image;
+
+        if($request->hasFile('image') && $request->file('image')->isValid())
+        {
+            if($user->image)
+                $fileName = $user->image;
+            else
+            // Define o nome da imagem com a extensão
+            $fileName = uniqid(date('HisYmd')).'.'.$request->image->extension();
+
+            /**
+             * As regras de upload de arquivos ficam dentro do arquivo config/filesystems.php
+             */
+            if(!$request->file('image')->storeAs('public/users', $fileName))
+                return redirect()
+                        ->back()
+                        ->with('error', 'Falha ao fazer o upload da imagem.')
+                        ->withInput();
+        }
+
+        if($user->userUpdate($request, $fileName))
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'Usuário alterado com sucesso!');
+        else
+            return redirect()
+                ->back()
+                ->with('error', 'Não foi possível atualizar os dados do usuário')
+                ->withInput();
     }
 
     public function destroy(string $id)

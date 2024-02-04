@@ -3,20 +3,24 @@
 @section('content')
 <div class="bred">
     <a href="{{ route('panel') }}" class="bred">Home ></a>
-    <a href="{{ route('planes.index') }}" class="bred">Aviões ></a>
-    <a class="bred">Alterar avião {{ $plane->id }}</a>
+    <a href="{{ route('users.index') }}" class="bred">usuários ></a>
+    <a class="bred">Alterar usuário</a>
 </div>
 
 <div class="title-pg">
-    <h1 class="title-pg">Alterar avião</h1>
+    <h1 class="title-pg">Alterar usuário {{ $user->name }}</h1>
 </div>
 
 <div class="content-din">
 
+    <div class="message">
+        @include('panel.includes.alerts')
+    </div>
+
     @include('panel.includes.errors')
 
-    {!! Form::model($plane, ['route' => ['planes.update', $plane->id], 'class' => 'form form-search form-ds', 'method' => 'PUT']) !!}
-        @include('panel.planes.form')
+    {!! Form::model($user, ['route' => ['users.update', $user->id], 'class' => 'form form-search form-ds', 'files' => true, 'method' => 'PUT']) !!}
+        @include('panel.users.form')
     {!! Form::close() !!}
 
 </div><!--Content Dinâmico-->

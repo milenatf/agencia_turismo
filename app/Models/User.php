@@ -49,7 +49,22 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->image = $fileName;
-        $this->is_admin = $request->is_admin == 1 ? true : false;
+        $this->is_admin = !isset($request->is_admin) ? false : true;
+
+        return $this->save();
+    }
+
+    public function userUpdate($request, $fileName)
+    {
+        $this->name = $request->name;
+        $this->email = $request->email;
+        $this->password = bcrypt($request->password);
+        $this->image = $fileName;
+
+        if($request->password && $request->password != '')
+            $this->password = bcrypt($request->password);
+
+        $this->is_admin = !isset($request->is_admin) ? false : true;
 
         return $this->save();
     }

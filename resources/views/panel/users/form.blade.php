@@ -20,7 +20,15 @@
 
     <div class="form-group">
         <label for="is_admin">É administrador?</label>
-        {!! Form::checkbox('is_admin', true, false, ['class' => 'form-check-input']) !!}
+        @if (isset($user))
+            @if ($user->is_admin == 0)
+                {!! Form::checkbox('is_admin', true, false, ['class' => 'form-check-input']) !!}
+            @else
+                {!! Form::checkbox('is_admin', $user->is_admin, 'true', ['class' => 'form-check-input']) !!}
+            @endif
+        @else
+            {{ Form::checkbox('is_admin', true, false, ['class' => 'form-check-input']) }}
+        @endif
     </div>
 
 <div class="form-group">
