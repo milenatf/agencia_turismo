@@ -46,7 +46,7 @@
                 <th>Nome</th>
                 <th>E-mail</th>
                 <th>Administrador</th>
-                <th width="150">Ações</th>
+                <th width="250">Ações</th>
             </tr>
 
             @forelse($users as $user)
@@ -63,7 +63,7 @@
                     <td>{{ $user->is_admin == 1 ? 'Sim' : 'Não' }}</td>
                     <td>
                         <a href="{{-- route('users.edit', $user->id)--}}" class="edit">Edit</a>
-                        <a href="{{-- route('users.show', $user->id) --}}" class="delete">View</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="delete">View</a>
                     </td>
                 </tr>
             @empty

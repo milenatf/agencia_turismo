@@ -4,12 +4,12 @@
 
     <div class="bred">
         <a href="{{ route('panel') }}" class="bred">Home ></a>
-        <a href="{{ route('planes.index') }}" class="bred">Aviões ></a>
-        <a class="bred">{{ $plane->id }}</a>
+        <a href="{{ route('users.index') }}" class="bred">Usuários ></a>
+        <a class="bred">{{ $user->name }}</a>
     </div>
 
     <div class="title-pg">
-        <h1 class="title-pg">Detalhes de {{ $plane->name }}</h1>
+        <h1 class="title-pg">Detalhes de {{ $user->name }}</h1>
     </div>
 
     <div class="content-din">
@@ -18,17 +18,17 @@
         </div>
 
         <ul>
-            <li><strong>ID:</strong> {{ $plane->id }}</li>
-            <li><strong>Marca:</strong> {{ $plane->brand->name }}</li>
-            <li><strong>Classe:</strong> {{ $plane->class }}</li>
-            <li><strong>Total de passageiros:</strong> {{ $plane->qty_passengers }}</li>
-            <li><strong>Data de criação:</strong> {{ $plane->created_at }}</li>
-            <li><strong>Última atualização:</strong> {{ $plane->updated_at }}</li>
+            <li><img src="{{isset($user->image) ? url("/storage/users/{$user->image}") : url('assets/panel/imgs/no-image.png')}}" alt="{{ $user->image }}" width="70"></li>
+            <li><strong>Nome:</strong> {{ $user->name }}</li>
+            <li><strong>E-mail:</strong> {{ $user->email }}</li>
+            <li><strong>Administrador:</strong> {{ $user->is_admin == 1 ? 'Sim' : 'Não' }}</li>
+            <li><strong>Data de criação:</strong> {{ formatDateAndtime($user->created_at) }}</li>
+            <li><strong>Última atualização:</strong> {{ formatDateAndtime($user->updated_at) }}</li>
         </ul>
 
-        {{ Form::open(['route' => ['planes.destroy', $plane->id], 'class' => 'form form-search form-ds', 'method' => 'DELETE']) }}
+        {{ Form::open(['route' => ['users.destroy', $user->id], 'class' => 'form form-search form-ds', 'method' => 'DELETE']) }}
             <div class="form-group">
-                <button class="btn btn-danger">Deletar {{ $plane->name }}</button>
+                <button class="btn btn-danger">Deletar {{ $user->name }}</button>
             </div>
         {{ Form::close() }}
     </div>

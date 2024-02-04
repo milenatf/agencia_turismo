@@ -64,7 +64,16 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        //
+        $title = 'Detalhes do usuário';
+
+        $user = $this->user->find($id);
+
+        if(!$user)
+            return redirect()
+                    ->back()
+                    ->with('error', 'Usuário não encontrado');
+
+        return view('panel.users.show', compact('title', 'user'));
     }
 
     public function edit(string $id)
@@ -79,7 +88,23 @@ class UserController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        $user = $this->user->find($id);
+
+        if(!$user) {
+            return redirect()
+                ->back()
+                ->with('error', 'Usuário não encontrado!');
+        }
+
+        if($user->delete())
+            return redirect()
+                    ->route('users.index')
+                    ->with('success', 'Usuário excluído com sucesso!');
+        else
+            return redirect()
+                    ->back()
+                    ->with('error', 'Não foi possível excluir o usuário!');
+
     }
 
     public function search(Request $request)
