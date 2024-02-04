@@ -19,4 +19,15 @@ class City extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    /**
+     * Uma cidade tem muitos aeroportos
+     *
+     * relacionamento um para muitos
+     * @return void
+     */
+    public function airports()
+    {
+        return $this->hasMany(Airport::class);
+    }
 }

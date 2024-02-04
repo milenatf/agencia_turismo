@@ -33,11 +33,17 @@
         <table class="table table-striped">
             <tr>
                 <th>Nome</th>
+                <th with="200">Ações</th>
             </tr>
 
             @forelse($cities as $city)
                 <tr>
                     <td>{{ $city->name }}</td>
+                    <td>
+                        <a href="{{ route('airports.index', $city->id) }}" class="edit">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i> Aeroportos
+                        </a>
+                    </td>
                 </tr>
             @empty
                 <tr>

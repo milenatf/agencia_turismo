@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\AirportController;
 use App\Http\Controllers\Panel\BrandController;
 use App\Http\Controllers\Panel\CityController;
 use App\Http\Controllers\Panel\FlightController;
@@ -28,6 +29,9 @@ Route::group(['prefix' => 'panel'], function() {
 
     Route::any('flights/search', [flightController::class, 'search'])->name('flights.search');
     Route::resource('flights', FlightController::class);
+
+    Route::any('city/{id}/airports/search', [AirportController::class, 'search'])->name('airports.search');
+    Route::resource('city/{id}/airports', AirportController::class);
 
     Route::get('/', [PanelController::class, 'index'])->name('panel');
 });
