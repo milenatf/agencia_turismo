@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('flight_id');
-            $table->date('date_reserverd');
+            $table->date('date_reserved');
             $table->enum('status', ['reserved', 'canceled', 'paid', 'concluded']);
             $table->timestamps();
 
