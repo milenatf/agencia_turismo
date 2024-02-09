@@ -1,0 +1,170 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: API Agencia de Turismo
+  description: |
+    description:  |
+    API criada para o projeto de agência de turismo
+    - Disponível em: [https://app.swaggerhub.com/apis/MILENADEVWEB/agencia_turismo/1.0.0](https://app.swaggerhub.com/apis/MILENADEVWEB/agencia_turismo/1.0.0)
+servers:
+  - url: http://localhost:8989
+tags:
+  - name: User
+paths:
+  /users:
+    get:
+      tags: 
+        - User
+      summary: Retorne uma lista de usuários
+      description: Lista todos os usuários
+      # requestBody: {}
+      responses:
+        '200':
+          description: 'Operação realizada com sucesso!'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '204':
+          description: 'Nenhum usuário foi encontrado.'
+        '500':
+          description: 'O servidor não conseguiu atender a solicitação.'
+    post:
+      tags:
+        - User
+      summary: Cadastre um novo usuário
+      description: Cadastrar um usuário novo no sistema
+      parameters:
+        - name: name
+          in: query
+          description: Nome do usuário
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: E-mail do usuário para acesso ao sistema
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Senha de acesso do usuário
+          required: true
+          schema:
+            type: string
+            format: password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: 'Usuário cadastrado com sucesso!'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: 'Não foi possível cadastrar o usuário. Verifique os dados.'
+        '500':
+          description: O servidor não conseguiu atender a solicitação.
+  /user/{user_id}:
+    put:
+      tags:
+        - User
+      summary: Altere um usuário que já está cadastrado no sistema
+      description: Alterar um usuário cadastrado no sistema
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          schema:
+            type: string
+            format: password
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '201':
+          description: 'Usuário alterado com sucesso!'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+        '422':
+          description: 'Não foi possível alterar o usuário! Verifique os dados.'
+        '500':
+          description: O servidor não conseguiu atender a solicitação.    
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: João da Silva
+        email:
+          type: string
+          example: joaodasilva@mail.com
+        password:
+          type: string
+          format: password
+    UserCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: João da Silva
+        email:
+          type: string
+          example: joaodasilva@mail.com
+        password:
+          type: string
+          format: password
+      required:
+        - user_id
+        - name
+        - email
+        - password
+
+    UserUpdate:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: João da Silva
+        email:
+          type: string
+          example: joaodasilva@mail.com
+        password:
+          type: string
+          format: password
+      required:
+        - user_id

@@ -111,6 +111,10 @@ class ReserveController extends Controller
 
         $title = "Resultado da pesquisa";
 
-        return view('panel.reserves.index', compact('title', 'reserves'));
+        $dataForm = $request->except('_token');
+
+        // dd($dataForm);
+
+        return view('panel.reserves.index', compact('title', 'reserves', 'dataForm'));
     }
 }

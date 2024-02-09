@@ -4,6 +4,7 @@
     <div class="bred">
         <a href="{{ route('panel') }}" class="bred">Home ></a>
         <a href="{{ route('reserves.index') }}" class="bred">Reservas </a>
+        <a class="bred">Resultado da pesquisa </a>
     </div>
 
     <div class="title-pg">
@@ -14,11 +15,7 @@
 
         <div class="form-search">
             {!! Form::open(['route' => 'reserves.search', 'class' => 'form form-inline']) !!}
-                {!! Form::text('user', null, ['class' => 'form-control', 'placeholder' => 'Filtrar por usuário']) !!}
-
-                {!! Form::text('reserve', null, ['class' => 'form-control', 'placeholder' => 'Filtrar por reserva']) !!}
-
-                {!! Form::date('date', null, ['class' => 'form-control', 'placeholder' => 'Filtrar por data']) !!}
+                {!! Form::text('key_search', null, ['class' => 'form-control', 'placeholder' => 'O que deseja encontrar?']) !!}
 
                 <button class="btn btn-search">Pesquisar</button>
             {!! Form::close() !!}
@@ -55,8 +52,8 @@
 
             @forelse($reserves as $reserve)
                 <tr>
-                    <td>{{ $reserve->user->name }}</td>
-                    <td>{{ $reserve->flight_id }} ({{formatDateAndtime($reserve->flight->date)}})</td>
+                    <td>{{ $reserve->user_name }}</td>
+                    <td>{{ $reserve->flight_id }} ({{formatDateAndtime($reserve->flight_date)}})</td>
                     <td>{{ formatDateAndtime($reserve->date_reserved) }}</td>
                     <td>{{ $reserve->status($reserve->status) }}</td>
                     {{-- <td>{{ $reserve->status($reserve->status) }}</td> --}}
@@ -73,10 +70,6 @@
             @endforelse
         </table>
 
-        @if(isset($dataForm)) <!-- Se existir a busca na página index -->
-            {{ $reserves->appends($dataForm)->links() }}
-        @else
-            {{ $reserves->links() }}
-        @endif
+        {{ $reserves->appends($dataForm)->links() }}
     </div><!--Content Dinâmico-->
 @endsection
