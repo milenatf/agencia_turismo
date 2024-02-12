@@ -141,6 +141,17 @@ class Flight extends Model
         return $this->belongsTo(Airport::class, 'airport_destination_id');
     }
 
+    public function plane()
+    {
+        return $this->belongsTo(Plane::class);
+    }
+
+    public function reserves() // Faz o relacionamento com as reservas do voo
+    {
+        return $this->hasMany(Reserve::class)
+                    ->where('reserves.status', '<>', 'canceled');
+    }
+
     /**
      *  Mutator para exibir a data em formato brasileiro
      * Padrão getNomedoAtributoAttribute()
