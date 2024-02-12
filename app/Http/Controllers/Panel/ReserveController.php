@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReserveFormRequest;
 use App\Models\Flight;
 use App\Models\Reserve;
 use App\Models\User;
@@ -39,12 +40,8 @@ class ReserveController extends Controller
         $title = 'Cadastro de reservas';
 
         $users = $this->user->pluck('name', 'id');
-        // $flights = $this->flight->with(['origin', 'destination'])->get();
         $flights = $this->flight->pluck('id', 'id');
         $status = $this->reserve->status();
-
-        // $origin = $flights->pluck('origin', 'id');
-        // dd($origin);
 
         return view('panel.reserves.create', compact('title', 'users', 'flights', 'status'));
     }
@@ -52,7 +49,7 @@ class ReserveController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReserveFormRequest $request)
     {
         if($this->reserve->create($request->all()))
             return redirect()
@@ -112,8 +109,6 @@ class ReserveController extends Controller
         $title = "Resultado da pesquisa";
 
         $dataForm = $request->except('_token');
-
-        // dd($dataForm);
 
         return view('panel.reserves.index', compact('title', 'reserves', 'dataForm'));
     }
