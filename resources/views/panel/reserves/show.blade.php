@@ -23,7 +23,7 @@
             <li><strong>Origem:</strong> {{ $flight->origin->name }}</li>
             <li><strong>Destino:</strong> {{ $flight->destination->name }}</li>
             <li><strong>Data:</strong> {{ formatDateAndtime($flight->date) }}</li>
-            <li><strong>Tempo de voo:</strong> {{ formatDateAndtime($flight->time_duration) }}</li>
+            <li><strong>Tempo de voo:</strong> {{ formatDateAndtime($flight->time_duration, 'H:i') }}</li>
             <li><strong>Saída:</strong> {{ formatDateAndtime($flight->hour_output, 'H:i') }}</li>
             <li><strong>Chegada:</strong> {{ formatDateAndtime($flight->arrival_time, 'H:i') }}</li>
             <li><strong>Preço anterior:</strong> {{ number_format($flight->old_price, 2, ',','.') }}</li>
@@ -33,8 +33,8 @@
             <li><strong>Imagem:</strong> {{ $flight->image }}</li>
             <li><strong>Parada:</strong> {{ $flight->qts_stops }}</li>
             <li><strong>Descrição:</strong> {{ $flight->description }}</li>
-            <li><strong>Data de criação:</strong> {{ $flight->created_at }}</li>
-            <li><strong>Última atualização:</strong> {{ $flight->updated_at }}</li>
+            <li><strong>Data de criação:</strong> {{ formatDateAndtime($flight->created_at, 'd/m/Y H:i') }}</li>
+            <li><strong>Última atualização:</strong> {{ formatDateAndtime($flight->updated_at, 'd/m/Y H:i') }}</li>
         </ul>
 
         {{ Form::open(['route' => ['flights.destroy', $flight->id], 'class' => 'form form-search form-ds', 'method' => 'DELETE']) }}

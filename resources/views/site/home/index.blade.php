@@ -6,41 +6,36 @@
         <div class="actions-form">
             <h2>Encontre: </h2>
 
-            <form action="" class="form-home text-center">
+            {{-- <form action="" class="form-home text-center"> --}}
+            {!! Form::open(['route' => 'search.flights.site', 'class' => 'form-home text-center']) !!}
                 <div class="form-group">
-                    <input type="text" name="cities_origin" list="cities_origin" class="form-control" placeholder="Cidade Origem">
-                    <datalist id="cities_origin">
-                        <option value="Cidade 1/GO">
-                        <option value="Cidade 2/GO">
-                        <option value="Cidade 3/GO">
-                        <option value="Cidade 4/GO">
-                        <option value="Cidade 5/GO">
+                    {!! Form::text('origin', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de origem']) !!}
+                    <datalist id="origin">
+                        @forelse ( $airports as $airport)
+                        <option value="{{ $airport->id }} - {{ $airport->city->name }} / {{ $airport->name }}">
+                        @empty
+                        @endforelse
                     </datalist>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="cities_destination" list="cities_destination" class="form-control" placeholder="Cidade Destino">
-                    <datalist id="cities_destination">
-                        <option value="Outra Cidade 1/GO">
-                        <option value="Outra Cidade 2/GO">
-                        <option value="Outra Cidade 3/GO">
-                        <option value="Outra Cidade 4/GO">
-                        <option value="Outra Cidade 5/GO">
+                    {!! Form::text('destination', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de destino']) !!}
+                    <datalist id="destination">
+                        @forelse ( $airports as $city )
+                        <option value="{{ $airport->id }} - {{ $airport->city->name }} / {{ $airport->name }}">
+                        @empty
+                        @endforelse
                     </datalist>
                 </div>
                 <div class="form-group">
-                    <input type="date" name="date" class="form-control" placeholder="Data">
+                    {!! Form::date('date', null, ['class' => 'form-control']) !!}
                 </div>
-                <!--
-                <button class="btn" type="submit">
-                    Procurar <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-                -->
-                <a href="index.php?pg=resultados-pesquisa">
-                    <button class="btn" type="button">
+
+                {{-- <a href="index.php?pg=resultados-pesquisa"> --}}
+                    <button class="btn" type="submit">
                         Procurar <i class="fa fa-search" aria-hidden="true"></i>
                     </button>
-                </a>
-            </form>
+                {{-- </a> --}}
+            {{!! Form::close() !!}}
         </div><!--actions-form-->
 
         <div class="rectangle"></div><!--rectangle-->

@@ -45,9 +45,16 @@ Route::group(['prefix' => 'panel'], function() {
     Route::get('/', [PanelController::class, 'index'])->name('panel');
 });
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('detalhes-voo/{id}', [SiteController::class, 'detailsFlight'])->name('details.flight');
+    Route::post('reservar', [SiteController::class, 'reserveFlight'])->name('reserve.flight');
+    Route::get('minhas-compras', [SiteController::class, 'myPurchaces'])->name('purchaces');
+});
+
 
 /** Rotas site */
 Route::get('/promocoes', [SiteController::class, 'promotions'])->name('promotions');
+Route::post('search', [SiteController::class, 'search'])->name('search.flights.site');
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
 
 require __DIR__.'/auth.php';
