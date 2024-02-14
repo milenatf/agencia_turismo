@@ -20,3 +20,4 @@ yarn-error.log
 /.docker
 *.log
 /.github
+/.docker
