@@ -160,6 +160,14 @@ class Flight extends Model
                     ->where('reserves.status', '<>', 'canceled');
     }
 
+    public function promotions()
+    {
+        return $this->where('is_promotion', false)
+                        ->where('date', '>=', date('Y-m-d'))
+                        ->with(['origin', 'destination'])
+                        ->get();
+    }
+
     /**
      *  Mutator para exibir a data em formato brasileiro
      * Padrão getNomedoAtributoAttribute()
