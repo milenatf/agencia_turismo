@@ -19,10 +19,10 @@
             <tbody>
                 @forelse ( $purchases as $purchase )
                 <tr>
-                    <td><?=$purchase->id?></td>
+                    <td>{{$purchase->id}}</td>
                     <td>
-                        <a href="?pg=detalhes-voo" class="badge badge-light">
-                            Ver Detalhes Voô: <?=$purchase->flight_id?>
+                        <a href="{{ route('purchase.detail', $purchase->id) }}" class="badge badge-light">
+                            Ver Detalhes Voô: {{ $purchase->flight_id }}
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </a>
                     </td>

@@ -46,9 +46,10 @@ Route::group(['prefix' => 'panel'], function() {
 });
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('minhas-compras/{id}', [SiteController::class, 'purchaseDetail'])->name('purchase.detail');
+    Route::get('minhas-compras', [SiteController::class, 'myPurchases'])->name('my.purchases');
     Route::get('detalhes-voo/{id}', [SiteController::class, 'detailsFlight'])->name('details.flight');
     Route::post('reservar', [SiteController::class, 'reserveFlight'])->name('reserve.flight');
-    Route::get('minhas-compras', [SiteController::class, 'myPurchases'])->name('my.purchases');
 });
 
 

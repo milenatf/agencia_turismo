@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReserveFormRequest;
 use App\Models\Airport;
 use App\Models\Flight;
-use App\Models\User;
 use App\Models\Reserve;
 use Illuminate\Http\Request;
 
@@ -84,8 +83,28 @@ class SiteController extends Controller
         $title = 'Minhas compras';
 
         $purchases = auth()->user()->reserves;
-        // dd($purchases);
 
         return view('site.users.purchases', compact('title', 'purchases'));
+    }
+
+    public function purchaseDetail($idReserve)
+    {
+        $reserve = Reserve::where('user_id', auth()->user()->id)
+                            ->where('id', $idReserve)
+                            ->get()
+                            ->first();
+
+        if($reserve) {
+            return redirect()->back();
+        }
+
+        $flight = Flight::with(['origin', 'destination'])->find($reserve->flight_id);
+
+        if(!$flight);
+            return redirect()->back();
+
+        $title = "Detalhes do voo {$flight->id}";
+
+        return view('site.users.detailsPurchase', compact('title', 'flight'));
     }
 }
