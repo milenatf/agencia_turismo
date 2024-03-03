@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReserveFormRequest;
 use App\Models\Airport;
 use App\Models\Flight;
+use App\Models\User;
 use App\Models\Reserve;
 use Illuminate\Http\Request;
 
@@ -78,8 +79,13 @@ class SiteController extends Controller
         return redirect()->back()->with('error', 'Não foi possível realizar a reserva');
     }
 
-    public function myPurchaces()
+    public function myPurchases()
     {
-        dd('My Purchaces');
+        $title = 'Minhas compras';
+
+        $purchases = auth()->user()->reserves;
+        // dd($purchases);
+
+        return view('site.users.purchases', compact('title', 'purchases'));
     }
 }

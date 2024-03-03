@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Reserve;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -74,5 +76,10 @@ class User extends Authenticatable
         return $this->where('name', 'LIKE', "%{$keySearch}%")
                     ->orWhere('email', 'LIKE', "%{$keySearch}%")
                     ->paginate($totalPage);
+    }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
     }
 }
