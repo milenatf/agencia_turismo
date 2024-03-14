@@ -12,9 +12,8 @@ use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 
-
 /** Rotas panel */
-Route::group(['prefix' => 'panel'], function() {
+Route::group(['prefix' => 'panel', 'middleware' => ['auth', 'admin']], function() {
     Route::any('brands/search', [BrandController::class, 'search'])->name('brands.search');
     Route::get('brands/{id}/planes', [BrandController::class, 'planes'])->name('brands.planes');
     Route::resource('brands', BrandController::class);
