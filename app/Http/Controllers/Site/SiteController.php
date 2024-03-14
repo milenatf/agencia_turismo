@@ -94,13 +94,13 @@ class SiteController extends Controller
                             ->get()
                             ->first();
 
-        if($reserve) {
+        if(!$reserve) {
             return redirect()->back();
         }
 
         $flight = Flight::with(['origin', 'destination'])->find($reserve->flight_id);
 
-        if(!$flight);
+        if(!$flight)
             return redirect()->back();
 
         $title = "Detalhes do voo {$flight->id}";
