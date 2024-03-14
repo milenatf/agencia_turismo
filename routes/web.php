@@ -46,6 +46,7 @@ Route::group(['prefix' => 'panel'], function() {
 });
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('meu-perfil', [SiteController::class, 'myProfile'])->name('my.profile');
     Route::get('minhas-compras/{id}', [SiteController::class, 'purchaseDetail'])->name('purchase.detail');
     Route::get('minhas-compras', [SiteController::class, 'myPurchases'])->name('my.purchases');
     Route::get('detalhes-voo/{id}', [SiteController::class, 'detailsFlight'])->name('details.flight');
@@ -56,6 +57,6 @@ Route::group(['middleware' => 'auth'], function() {
 /** Rotas site */
 Route::get('/promocoes', [SiteController::class, 'promotions'])->name('promotions');
 Route::post('search', [SiteController::class, 'search'])->name('search.flights.site');
-Route::get('/', [SiteController::class, 'index'])->name('site.index');
+Route::get('/', [SiteController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';

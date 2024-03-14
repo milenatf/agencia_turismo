@@ -9,7 +9,7 @@
             {{-- <form action="" class="form-home text-center"> --}}
             {!! Form::open(['route' => 'search.flights.site', 'class' => 'form-home text-center']) !!}
                 <div class="form-group">
-                    {!! Form::text('origin', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de origem']) !!}
+                    {!! Form::text('origin', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de origem', 'required']) !!}
                     <datalist id="origin">
                         @forelse ( $airports as $airport)
                         <option value="{{ $airport->id }} - {{ $airport->city->name }} / {{ $airport->name }}">
@@ -18,7 +18,7 @@
                     </datalist>
                 </div>
                 <div class="form-group">
-                    {!! Form::text('destination', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de destino']) !!}
+                    {!! Form::text('destination', null, ['class' => 'form-control', 'list' => 'origin', 'placeholder' => 'Cidade de destino', 'required']) !!}
                     <datalist id="destination">
                         @forelse ( $airports as $city )
                         <option value="{{ $airport->id }} - {{ $airport->city->name }} / {{ $airport->name }}">
@@ -27,14 +27,14 @@
                     </datalist>
                 </div>
                 <div class="form-group">
-                    {!! Form::date('date', null, ['class' => 'form-control']) !!}
+                    {!! Form::date('date', null, ['class' => 'form-control', 'required']) !!}
                 </div>
 
-                {{-- <a href="index.php?pg=resultados-pesquisa"> --}}
+                <a href="index.php?pg=resultados-pesquisa">
                     <button class="btn" type="submit">
                         Procurar <i class="fa fa-search" aria-hidden="true"></i>
                     </button>
-                {{-- </a> --}}
+                </a>
             {{!! Form::close() !!}}
         </div><!--actions-form-->
 
