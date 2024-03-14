@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\UserStoreUpdateFormRequest;
 use App\Http\Requests\UpdateProfileFormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 
@@ -202,6 +203,13 @@ class UserController extends Controller
             return redirect()
                     ->back()
                     ->with('error', 'Falha ao alterar os dados!');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('home');
     }
 
 }
