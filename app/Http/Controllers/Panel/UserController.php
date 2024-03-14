@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserStoreUpdateFormRequest;
 use App\Models\User;
+use App\Http\Requests\UserStoreUpdateFormRequest;
+use App\Http\Requests\UpdateProfileFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -169,7 +171,7 @@ class UserController extends Controller
         return view('site.users.profile', compact('title'));
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(UpdateProfileFormRequest $request)
     {
         $user = auth()->user();
         $user->name = $request->name;
