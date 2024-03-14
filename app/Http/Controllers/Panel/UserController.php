@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreUpdateFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -172,19 +173,33 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $user->name = $request->name;
-
-        if($request->password)
+        if ($request->password)
             $user->password = bcrypt($request->password);
 
+        if ( $request->hasFile('image') && $request->file('image')->isValid() ) {
+
+            if ( $user->image )
+                $nameFile = $user->image;
+            else
+                $nameFile = Str::kebab($user->name).'.'.$request->image->extension();
+
+            $user->image = $nameFile;
+
+            if ( !$request->image->storeAs('public/users', $nameFile) )
+                return redirect()
+                            ->back()
+                            ->with('error', 'Falha ao fazer upload.');
+
+        }
+        
         if($user->save())
             return redirect()
                     ->route('my.profile')
-                    ->with('success', 'Usuário alterado com sucesso!');
+                    ->with('success', 'Atualizado com sucesso!');
         else
             return redirect()
                     ->back()
-                    ->with('error', 'Não foi possível alterar o usuário!');
-
+                    ->with('error', 'Falha ao alterar os dados!');
     }
 
 }
